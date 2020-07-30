@@ -1,4 +1,4 @@
-# Linkedin_analytics_data
+# Linkedin_data_updater
 Simple Python code for updating data downloaded from Linkedin.
 Please feel free to send feedback and suggest any changes.
 
