@@ -31,6 +31,7 @@ Please feel free to send feedback and suggest any changes.
 ## What's inside? 
 You'll find 4 files. The Python script to be run every time you need to update your Linkedin data.
 - Linkedin_data_updater.py
+
 The other 3 files are the Excel datasources which will feed the Data Studio dashboard.
 - Linkedin_followers.xlsx
 - Linkedin_visitors.xlsx
