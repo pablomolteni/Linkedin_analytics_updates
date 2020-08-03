@@ -1,5 +1,5 @@
 # Import libraries.
-# import numpy as np
+import numpy as np
 import pandas as pd
 
 print('Remember to backup your data Linkedin_xxxxx.xlsx files before you continue')
