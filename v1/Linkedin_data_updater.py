@@ -1,21 +1,10 @@
 # Import libraries.
-# import numpy as np
+import numpy as np
 import pandas as pd
 
 print('Remember to backup your data Linkedin_xxxxx.xlsx files before you continue')
 print('Be sure the files you downloaded are on the same directory as this executable file')
 
-def confirmation_dialog(confirm):
-    while confirm != 'N':
-        confirm = input('Update xlsx? y=Continue / n=exit program: ')
-        if confirm == 'y':
-            break
-        elif confirm == 'n':
-            exit()
-        elif confirm == 'Y':
-            break
-        elif confirm == 'N':
-            exit()
 
 # FOLLOWERS DATA UPDATER
 
@@ -28,7 +17,7 @@ while True:
 
     file_name_followers = input()
 
-    if (file_name_followers.find('followers') != -1):
+    if (file_name_followers.find('visitors') != -1):
         print ("File name correct")
         print('File name to be updated:', file_name_followers)
         break
@@ -82,16 +71,16 @@ Linkedin_followers = pd.read_excel('Linkedin_followers.xlsx')
 
 # Define last_date as the last available date in Linkedin_followers_New_followers.csv
 last_date = Linkedin_followers['Date'].max()
-if pd.isna(last_date):
-    last_date = '2001-01-01'
-    print('No data on database. New info will be updated')
-else:
-    print('Previous last date available in Linkedin_followers.xlsx was:',  last_date)
-print('Data will be updated up to:', download_date)
-print()
+print('Previous last date available in database was:',  last_date)
+print('New last date will be:', download_date)
 
 confirm = ''
-confirmation_dialog(confirm)
+while confirm != 'N':
+    confirm = input('Update Linkedin_followers.xlsx? y=Continue / n=exit program: ')
+    if confirm == 'y':
+        break
+    if confirm == 'n':
+        exit()
 
 # new_followers dataframe is trimmed to include only the data that is not on Linkedin_followers_New_followers.csv. Data from last_date to download_date (included).
 new_followers = new_followers.loc[(new_followers['Date'] > last_date) & (new_followers['Date'] <= download_date)]
@@ -122,7 +111,7 @@ print()
 print('FINISHED UPDATING FOLLOWERS DATA.')
 print('---------------')
 print()
-print()
+
 # VISITORS DATA UPDATER
 
 print('VISITORS DATA')
@@ -188,19 +177,19 @@ Linkedin_visitors = pd.read_excel('Linkedin_visitors.xlsx')
 
 # Define last_date as the last available date in Linkedin_visitors.xls
 last_date = Linkedin_visitors['Date'].max()
-if pd.isna(last_date):
-    last_date = '2001-01-01'
-    print('No data on database. New info will be updated')
-else:
-    print('Previous last date available in Linkedin_visitors.xlsx was:',  last_date)
-print('Data will be updated up to:', download_date)
-print()
+print('Previous last date available in database was:',  last_date)
+print('New last date will be:', download_date)
 
 # visitors_metrics dataframe is trimmed to include only the data that is not on Linkedin_followers_New_followers.csv. Data from last_date to download_date (included).
 visitor_metrics = visitor_metrics.loc[(visitor_metrics['Date'] > last_date) & (visitor_metrics['Date'] <= download_date)]
 
 confirm = ''
-confirmation_dialog(confirm)
+while confirm != 'N':
+    confirm = input('Update Linkedin_visitors.xlsx? y=Continue / n=exit program: ')
+    if confirm == 'y':
+        break
+    if confirm == 'n':
+        exit()
 
 # Write new data on master excel file
 with pd.ExcelWriter('Linkedin_visitors.xlsx',
@@ -229,7 +218,7 @@ print()
 print('FINISHED UPDATING VISITORS DATA.')
 print('---------------')
 print()
-print()
+
 # UPDATES DATA UPDATER
 
 print('UPDATES DATA')
@@ -290,13 +279,6 @@ old_engagement['Campaign end date'] = pd.to_datetime(old_engagement['Campaign en
 
 # Define last_date as the last date available in master update file
 last_date = old_metrics['Date'].max()
-if pd.isna(last_date):
-    last_date = '2001-01-01'
-    print('No data on database. New info will be updated')
-else:
-    print('Previous last date available in Linkedin_updates.xlsx was:',  last_date)
-print('Data will be updated up to:', download_date)
-print()
 
 old_engagement.set_index('Update link', inplace=True)
 
@@ -318,7 +300,12 @@ df_metrics = old_metrics.loc[(old_metrics['Date'] < first_date)]
 df_metrics = df_metrics.append(new_metrics, ignore_index=True)
 
 confirm = ''
-confirmation_dialog(confirm)
+while confirm != 'N':
+    confirm = input('Update Linkedin_updates.xlsx? y=Continue / n=exit program: ')
+    if confirm == 'y':
+        break
+    if confirm == 'n':
+        exit()
 
 with pd.ExcelWriter('Linkedin_updates.xlsx',
 #                     mode='a',
@@ -336,6 +323,3 @@ writer.save()
 
 print()
 print('FINISHED UPDATING UPDATES DATA.')
-print('---------------------')
-print('Program ended. Check updated files.')
-print('---------------------')
